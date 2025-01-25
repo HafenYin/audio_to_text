@@ -1,0 +1,12 @@
+{
+  "recording": {
+    "FORMAT": "pyaudio.paInt16",
+    "CHANNELS": 1,
+    "RATE": 16000,
+    "CHUNK": 1024
+  },
+  "baidu_api": {
+    "ACCESS_TOKEN": "24.7505965b0b5a8b9baa8ad4ac99b8928d.2592000.1740427366.282335-116982149",
+    "ASR_URL": "http://vop.baidu.com/server_api"
+  }
+}
