@@ -84,6 +84,7 @@ def stop_recording():
         return jsonify({"status": "error", "message": "没有正在进行的录音"})
     
 
+# 暂停程序路由
 @app.route('/stop', methods=['POST'])
 def stop():
     print("程序已停止")
