@@ -10,7 +10,11 @@ import os
 app = Flask(__name__)
 
 
-with open('serve_config.json') as file:
+# 获取当前脚本所在的目录
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# 构造文件的绝对路径
+file_path = os.path.join(script_dir, 'serve_config.json')
+with open(file_path) as file:
     config = json.load(file)
 
 
@@ -83,14 +87,6 @@ def stop_recording():
     else:
         return jsonify({"status": "error", "message": "没有正在进行的录音"})
     
-
-# 暂停程序路由
-@app.route('/stop', methods=['POST'])
-def stop():
-    print("程序已停止")
-    os.kill(os.getpid(), signal.SIGTERM)  # 终止当前进程
-    return 200
-
 
 if __name__ == '__main__':
     app.run(debug=True)
