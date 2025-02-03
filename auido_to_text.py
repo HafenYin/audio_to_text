@@ -2,7 +2,6 @@ from flask import Flask, jsonify
 import pyaudio
 import requests
 import threading
-import signal
 import time
 import json
 import os
@@ -12,7 +11,7 @@ app = Flask(__name__)
 
 # 获取当前脚本所在的目录
 script_dir = os.path.dirname(os.path.abspath(__file__))
-# 构造文件的绝对路径
+# 根据当前路径，获取路径下的依赖文件路径
 file_path = os.path.join(script_dir, 'serve_config.json')
 with open(file_path) as file:
     config = json.load(file)
@@ -47,9 +46,9 @@ def start_recording():
     global is_recording
     if not is_recording:
         threading.Thread(target=record_audio).start()
-        return jsonify({"status": "success", "message": "录音已开始"})
+        return jsonify({"message": "录音已开始"})
     else:
-        return jsonify({"status": "error", "message": "录音已在进行中"})
+        return jsonify({"message": "录音已在进行中"})
 
 
 # 结束录音并上传数据路由
@@ -58,7 +57,7 @@ def stop_recording():
     global is_recording, stream, frames
     if is_recording:
         is_recording = False
-        time.sleep(1)  # 等待录音线程结束
+        # time.sleep(0)  # 等待录音线程结束
         stream.stop_stream()
         stream.close()
 
@@ -81,11 +80,9 @@ def stop_recording():
                                  params=params,
                                  data=audio_data)
 
-        # 解析响应
-        result = response.json()
-        return jsonify({"status": "success", "result": result})
+        return jsonify({"response": response.json()})
     else:
-        return jsonify({"status": "error", "message": "没有正在进行的录音"})
+        return jsonify({"message": "没有正在进行的录音"})
     
 
 if __name__ == '__main__':
