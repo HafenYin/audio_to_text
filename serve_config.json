@@ -8,5 +8,9 @@
   "baidu_api": {
     "ACCESS_TOKEN": "24.7505965b0b5a8b9baa8ad4ac99b8928d.2592000.1740427366.282335-116982149",
     "ASR_URL": "http://vop.baidu.com/server_api"
+  },
+  "graq_api": {
+    "API_KEY": "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",
+    "ENDPOINT_URL": "https://api.groq.com/openai/v1/audio/transcriptions"
   }
 }
