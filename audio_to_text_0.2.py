@@ -101,13 +101,23 @@ def stop_recording():
         # 自动添加 main.py 所在目录到 sys.path
         import sys
         sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-        from audio_response import graq_audio_response, baidu_audio_response
-        # 使用graq_audio_response
-        response = graq_audio_response(wav_data, config)
-        # response = baidu_audio_response(wav_data, config)
-        print(response)
+        from audio_response import graq_audio_response, baidu_audio_response, aliyun_audio_response
+        if config['selectedApi'] == 'aliyun_api':
+            response = aliyun_audio_response(wav_data, config)
+            result = response.json().get('result', '未识别到可用音频')
+        elif config['selectedApi'] == 'baidu_api':
+            response = baidu_audio_response(wav_data, config)
+            result = response.json().get('result', '未识别到可用音频')
+        elif config['selectedApi'] == 'graq_api':
+            response = graq_audio_response(wav_data, config)
+            result = response.json().get('text', '未识别到可用音频')
+        else:
+            print("serve_config.json未填写当前API")
+            
+        print(response.json())
+        print(result)
 
-        return jsonify({"response": response})
+        return jsonify({"response": response.json(), "result": result, "status221": response.status_code})
     
     else:
         # 没有录音时的返回
