@@ -31,6 +31,7 @@ def graq_audio_response(wav_data, config):
                 data={
                     'model': 'whisper-large-v3',
                     'language': 'zh',
+                    'prompt': '除其他语言和数字、符号外，只要是中文都用简体中文输出'
                 }
             )
 
