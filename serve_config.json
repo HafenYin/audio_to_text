@@ -1,22 +1,17 @@
 {
-  "recording": {
-    "FORMAT": "pyaudio.paInt16",
-    "CHANNELS": 1,
-    "RATE": 16000,
-    "CHUNK": 1024
-  },
   "selectedApi": "aliyun_api",
   "baidu_api": {
-    "access_token": "24.7505965b0b5a8b9baa8ad4ac99b8928d.2592000.1740427366.282335-116982149",
+    "access_token": "",
     "server_url": "http://vop.baidu.com/server_api"
   },
   "graq_api": {
-    "api_key": "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",
+    "api_key": "",
     "server_url": "https://api.groq.com/openai/v1/audio/transcriptions"
   },
   "aliyun_api": {
     "server_url": "https://nls-gateway-cn-shanghai.aliyuncs.com/stream/v1/asr",
-    "app_key": "Q4EqujB9WNQMyXzp",
-    "access_token": "d13cc02005bc48b7b37fbf345d68de76"
-}
+    "app_key": "",
+    "access_key_id": "",
+    "access_key_secret": ""
+  }
 }
