@@ -3,6 +3,7 @@ import pyaudio
 import threading
 import struct
 import json
+import sys
 import os
 
 app = Flask(__name__)
@@ -95,23 +96,20 @@ def stop_recording():
         wav_data = wav_header + audio_data
 
         # 自动添加 main.py 所在目录到 sys.path
-        import sys
         sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-        from audio_response import graq_audio_response, baidu_audio_response, aliyun_audio_response
+        from audio_response import baidu_audio_response, aliyun_audio_response
+
+        # 选择API并调用
         if config['selectedApi'] == 'aliyun_api':
             response = aliyun_audio_response(wav_data, config)
             result = response.json().get('result', '未识别到可用音频')
         elif config['selectedApi'] == 'baidu_api':
             response = baidu_audio_response(wav_data, config)
             result = response.json().get('result', '未识别到可用音频')
-        elif config['selectedApi'] == 'graq_api':
-            response = graq_audio_response(wav_data, config)
-            result = response.json().get('text', '未识别到可用音频')
         else:
             print("serve_config.json未填写当前API")
-            
+
         print(response.json())
-        print(result)
 
         return jsonify({"response": response.json(), "result": result, "status": response.status_code})
     

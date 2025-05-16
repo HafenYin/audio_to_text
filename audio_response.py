@@ -24,26 +24,6 @@ def baidu_audio_response(audio_data, config):
     return response
 
 
-def graq_audio_response(wav_data, config):
-    """
-    Groq语音识别API
-    """
-    response = requests.post(
-                url=config['graq_api']['server_url'],
-                headers={
-                    "Authorization": f"Bearer {config['graq_api']['api_key']}"
-                },
-                files={'file': ('audio.wav', wav_data, 'audio/wav')},
-                data={
-                    'model': 'whisper-large-v3',
-                    'language': 'zh',
-                    'prompt': '除其他语言和数字、符号外，只要是中文都用简体中文输出'
-                }
-            )
-
-    return response
-
-
 def aliyun_audio_response(audio_data, config):
     """
     阿里云语音识别API（整点/半点刷新）
