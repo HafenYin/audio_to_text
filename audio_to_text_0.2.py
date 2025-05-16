@@ -95,7 +95,7 @@ def stop_recording():
         # 构造完整WAV数据
         wav_data = wav_header + audio_data
 
-        # 自动添加 main.py 所在目录到 sys.path
+        # 自动添加 main.py 所在目录到 sys.path，以便导入 audio_response
         sys.path.append(os.path.dirname(os.path.abspath(__file__)))
         from audio_response import baidu_audio_response, aliyun_audio_response
 
@@ -103,19 +103,20 @@ def stop_recording():
         if config['selectedApi'] == 'aliyun_api':
             response = aliyun_audio_response(wav_data, config)
             result = response.json().get('result', '未识别到可用音频')
+            print(response.json())
+            return jsonify({"response": response.json(), "result": result}),response.status_code
         elif config['selectedApi'] == 'baidu_api':
             response = baidu_audio_response(wav_data, config)
             result = response.json().get('result', '未识别到可用音频')
+            print(response.json())
+            return jsonify({"response": response.json(), "result": result}),response.status_code
         else:
-            print("serve_config.json未填写当前API")
-
-        print(response.json())
-
-        return jsonify({"response": response.json(), "result": result, "status": response.status_code})
+            print("serve_config.json 配置错误或未填写")
+            return jsonify({"response": "没有正在进行的录音"}),404
     
     else:
         # 没有录音时的返回
-        return jsonify({"response": "没有正在进行的录音"})
+        return jsonify({"response": "没有正在进行的录音"}),404
 
 
 if __name__ == '__main__':
